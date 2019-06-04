@@ -122,18 +122,23 @@ enwiki_tuning_reports: \
 
 ########################## Basque Wikipedia ####################################
 
+
+datasets/euwiki.sampled_revisions.172_balanced.json:
+	# from https://quarry.wmflabs.org/query/36633
+	wget https://quarry.wmflabs.org/run/379904/output/0/json-lines -qO- > $@
+
 datasets/euwiki.human_labeled.400.json:
 	./utility fetch_labels \
-                https://labels.wmflabs.org/campaigns/euwiki/79/ > $@
+	 https://labels.wmflabs.org/campaigns/euwiki/79/ > $@
 
 datasets/euwiki.human_labeled.300_balanced.json: \
 		datasets/euwiki.human_labeled.400.json
 	(cat $< | grep '"wp10": "Stub"' | shuf -n 50; \
 	 cat $< | grep '"wp10": "Start"' | shuf -n 50; \
- 	 cat $< | grep '"wp10": "C"' | shuf -n 50; \
- 	 cat $< | grep '"wp10": "B"' | shuf -n 50; \
- 	 cat $< | grep '"wp10": "GA"' | shuf -n 50; \
- 	 cat $< | grep '"wp10": "FA"' | shuf -n 50) > $@
+	 cat $< | grep '"wp10": "C"' | shuf -n 50; \
+	 cat $< | grep '"wp10": "B"' | shuf -n 50; \
+	 cat $< | grep '"wp10": "GA"' | shuf -n 50; \
+	 cat $< | grep '"wp10": "FA"' | shuf -n 50) > $@
 
 datasets/euwiki.human_labeled.w_cache.300_balanced.json: \
 		datasets/euwiki.human_labeled.300_balanced.json
